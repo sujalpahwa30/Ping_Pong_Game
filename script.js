@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded" , () => {
     let paddle = document.getElementById("paddle"); // targeting the paddle element 
 
     // here the ballX and ballY will be helping us to set a starting point of ball w.r.t table 
-    let ballX = 10; // distance of the top of the ball w.r.t ping pong table
-    let ballY = 10; // distance of the left of the ball w.r.t ping pong table
+    let ballX = 50; // distance of the top of the ball w.r.t ping pong table
+    let ballY = 50; // distance of the left of the ball w.r.t ping pong table
 
     let dx = 2; // displacement factor in x-direction , 2 -> you will displace by 2 px in +x direction , -2 -> you will displace by 2px in -x direction 
     let dy = 2; // displacement factor in y-direction , 2 -> you will displace by 2 px in +y direction , -2 -> you will displace by 2px in -y direction 
@@ -48,6 +48,16 @@ document.addEventListener("DOMContentLoaded" , () => {
             //down arrow 
             paddleY += dPy;
         }
+        paddle.style.top = `${paddleY}px`;
+    });
+
+    document.addEventListener("mousemove" , (event) => {
+        if(event.clientX > table.offsetLeft + (table.offsetWidth/2)) return;
+        let mouseDistanceFromTop = event.clientY; // this is the distance of the mouse pointer from the top of the screen 
+        let distanceOfTableFromTop = table.offsetTop;
+        let mousePointControl = mouseDistanceFromTop - distanceOfTableFromTop - paddle.offsetHeight/2;
+        paddleY = mousePointControl;
+        if(paddleY <= 0 || paddleY > table.offsetHeight - paddle.offsetHeight) return; // if bottom of the paddle touches bottom of the table
         paddle.style.top = `${paddleY}px`;
     })
 });
